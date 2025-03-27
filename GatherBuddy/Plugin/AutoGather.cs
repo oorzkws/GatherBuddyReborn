@@ -412,17 +412,7 @@ namespace GatherBuddy.Plugin
             var gatheringWindow = (AddonGathering*)Dalamud.GameGui.GetAddonByName("Gathering", 1);
             if (gatheringWindow == null) return;
 
-            var ids = new List<uint>()
-                    {
-                    gatheringWindow->GatheredItemId1,
-                    gatheringWindow->GatheredItemId2,
-                    gatheringWindow->GatheredItemId3,
-                    gatheringWindow->GatheredItemId4,
-                    gatheringWindow->GatheredItemId5,
-                    gatheringWindow->GatheredItemId6,
-                    gatheringWindow->GatheredItemId7,
-                    gatheringWindow->GatheredItemId8
-                    };
+            List<uint> ids = gatheringWindow->ItemIds;
 
             UseActions(ids);
 

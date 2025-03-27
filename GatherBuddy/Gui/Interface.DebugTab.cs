@@ -715,6 +715,25 @@ public partial class Interface
         //ImGui.Text($"IsSquadronPassBuffUp: {GatherBuddy.AutoGather.GetIsSquadronPassBuffUp()}");
         ImGui.Text($"SortingMethodType: {GatherBuddy.Config.AutoGatherConfig.SortingMethod.ToString()}");
 
+        // Give us more info on the window state
+        unsafe {
+            var gatheringWindow = (AddonGathering*)Dalamud.GameGui.GetAddonByName("Gathering", 1);
+            if (gatheringWindow == null) {
+                ImGui.Text("GatheringWindow: null");
+            } else {
+                if (gatheringWindow->IsFullyLoaded() && gatheringWindow->IsReady) {
+                    var desiredItems = _plugin.AutoGatherListsManager.ActiveItems.Select(i=>i.Item.ItemId);
+                    var ids = gatheringWindow->ItemIds;
+                    for (int i = 0; i < ids.Length; i++) {
+                        ImGui.Text($"ItemIds[{i}] = {ids[i]}");
+                    }
+
+                } else {
+                    ImGui.Text($"GatheringWindow: {(gatheringWindow->IsFullyLoaded() ? "Not Ready" : "Not Fully Loaded")}");
+                }
+            }
+        }
+
         unsafe
         {
             var addon = (AddonGatheringMasterpiece*)Dalamud.GameGui.GetAddonByName("GatheringMasterpiece");
