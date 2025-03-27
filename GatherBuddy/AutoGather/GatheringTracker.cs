@@ -118,8 +118,12 @@ namespace GatherBuddy.AutoGather
 
         private void ProcessArgs(Span<AtkValue> values)
         {
-            if (values.Length != 113)
+            if (values.Length != 114) {
+                if (values.Length > 1) {
+                    GatherBuddy.Log.Verbose($"Args Length is {values.Length}, not 114");
+                }
                 return;
+            }
 
             var n = 0; //Node type 2=logging 3=quarrying 4=harvesting 5=mining; 0 after revisit
             if (values[n].Type == ValueType.UInt && values[n].UInt is 0 or > 1 and < 6)
